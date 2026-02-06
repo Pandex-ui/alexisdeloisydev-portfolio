@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hellenism-Pallas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=New+Rocker&family=Pirata+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'New Rocker', cursive;
+            color: #eaeaea;
+            background-color: #1d4c53;
+        }
+
+        /* Section Hero */
+        .hero {
+            background: url(https://www.laboiteverte.fr/wp-content/uploads/2012/09/foret-allemagne-Michael-Lange-02.jpg) no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #FFFFF0;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Login Button */
+        .login-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #dd985c;
+            color: #1e1e1e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInLogin 1.5s ease-out forwards;
+            animation-delay: 0.5s;
+            font-family: 'New Rocker', cursive;
+        }
+
+        .login-btn:hover {
+            background-color: #e5a46b;
+        }
+
+        @keyframes fadeInLogin {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Produits */
+        .products {
+            padding: 2rem;
+            text-align: center;
+            background-color: #26555c;
+        }
+
+        .products h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #dd985c;
+        }
+
+        /* Carousel container */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card {
+            background-color: #26555c;
+            border: 1px solid #dd985c;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            width: 250px;
+            flex: 0 0 auto;
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.00);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .product-card h3 {
+            margin: 0.5rem 0;
+            color: #dd985c;
+        }
+
+        /* Styled link as button */
+        .product-card a {
+            display: inline-block;
+            background-color: #dd985c;
+            color: #1e1e1e;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'New Rocker', cursive;
+            transition: background-color 0.3s ease;
+        }
+
+        .product-card a:hover {
+            background-color: #e5a46b;
+        }
+
+        /* Carousel navigation buttons */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #dd985c;
+            border: none;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+        }
+
+        .prev-btn {
+            left: 10px;
+        }
+
+        .next-btn {
+            right: 10px;
+        }
+
+        .carousel-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Section contact */
+        .contact {
+            padding: 2rem;
+            background-color: #1d4c53;
+            color: #eaeaea;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact form {
+            max-width: 400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact input, .contact textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #1e1e1e;
+            border-radius: 5px;
+            background-color: #1d4c53;
+            color: #eaeaea;
+        }
+
+        .contact button {
+            background-color: #dd985c;
+            color: #1e1e1e;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'New Rocker', cursive;
+        }
+
+        .contact button:hover {
+            background-color: #e5a46b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Section Hero -->
+    <header class="hero">
+        <a href="page_login.html" class="login-btn">Login / Se connecter</a>
+        <div class="hero-content">
+            <h1>Hellenism-Pallas</h1>
+            <p>Chapelets Païens, Grecques ect... artisanaux, élégant et mystérieux.</p>
+        </div>
+    </header>
+
+    <!-- Section Produit -->
+    <section class="products">
+        <h2>Nos Chapelets</h2>
+        <div class="carousel">
+            <div class="carousel-track">
+                <div class="product-card">
+                    <img src="images/hades_persephone.JPG" alt="Chapelet Mystique">
+                    <h3>Chapelet Hadès</h3>
+                    <p>Un bijou chargé d'histoire.</p>
+                    <a href="page_details_hades.html">Voir Détails</a>
+                </div>
+                <div class="product-card">
+                    <img src="images/hebe.jpeg" alt="Chapelet Antique">
+                    <h3>Chapelet Hebe</h3>
+                    <p>Une pièce unique et artisanale.</p>
+                    <a href="page_details_hebe.html">Voir Détails</a>
+                </div>
+                <div class="product-card">
+                    <img src="images/hecate.jpeg" alt="Chapelet Enchanté">
+                    <h3>Chapelet Hecate</h3>
+                    <p>Pour un style mystique.</p>
+                    <a href="page_details_hecate.html">Voir Détails</a>
+                </div>
+                <div class="product-card">
+                    <img src="images/Screenshot_20241023_175844_Instagram.JPG" alt="Chapelet Divin">
+                    <h3>Chapelet Séléné</h3>
+                    <p>Un bijou céleste.</p>
+                    <a href="page_details_selene.html">Voir Détails</a>
+                </div>
+            </div>
+            <button class="carousel-btn prev-btn">❮</button>
+            <button class="carousel-btn next-btn">❯</button>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h2>Contactez-nous</h2>
+        <form>
+            <label for="name">Nom et Prénom:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Envoyer</button>
+        </form>
+    </section>
+</body>
+<script>
+    const track = document.querySelector('.carousel-track');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+
+    const cards = Array.from(track.children);
+    const firstClone = cards[0].cloneNode(true);
+    const lastClone = cards[cards.length - 1].cloneNode(true);
+
+    track.appendChild(firstClone);
+    track.insertBefore(lastClone, cards[0]);
+
+    const cardWidth = cards[0].getBoundingClientRect().width + 24; 
+    let currentIndex = 1;
+    track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex++;
+        track.style.transition = 'transform 0.5s ease';
+        track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+        track.addEventListener('transitionend', () => {
+            if (currentIndex === cards.length + 1) {
+                currentIndex = 1;
+                track.style.transition = 'none';
+                track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            }
+        });
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex--;
+        track.style.transition = 'transform 0.5s ease';
+        track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+        track.addEventListener('transitionend', () => {
+            if (currentIndex === 0) {
+                currentIndex = cards.length;
+                track.style.transition = 'none';
+                track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            }
+        });
+    });
+</script>
+</html>
