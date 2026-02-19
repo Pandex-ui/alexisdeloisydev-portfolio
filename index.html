@@ -216,18 +216,6 @@
               <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="4"/>
             </svg>
           </button>
-
-          <?php if (isset($_SESSION['success'])): ?>
-            <div class="form-toast show"><?= $_SESSION['success']; ?></div>
-            <?php unset($_SESSION['success']); ?>
-          <?php endif; ?>
-
-          <?php if (isset($_SESSION['error'])): ?>
-            <div class="form-toast show" style="background:red;">
-              <?= $_SESSION['error']; ?>
-            </div>
-            <?php unset($_SESSION['error']); ?>
-          <?php endif; ?>
         </div>
 
       </form>
@@ -327,4 +315,5 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 </script>
 
 </body>
+
 </html>
