@@ -10,72 +10,226 @@ body {
   background: #0f0f0f;
   color: #e5e5e5;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
-/* NAVBAR */
+/* NAVBAR — mobile first */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
-  padding: 20px 50px;
+  height: 64px;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  z-index: 100;
+  z-index: 200;
 }
 
 .navbar .logo {
   display: flex;
   align-items: center;
-  /* keep a reasonable max width container for the logo */
-  max-width: auto;
 }
 
-/* Constrain the logo image so it never overflows the navbar */
 .navbar .logo img {
   display: block;
   width: auto;
-  max-height: 200px; /* fits within the navbar's 80px height and vertical padding */
+  max-height: 104px;
   height: auto;
 }
 
-.navbar ul {
+/* Hamburger button */
+.hamburger {
   display: flex;
-  gap: 30px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 210;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #e5e5e5;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger--open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile nav overlay */
+#main-nav {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.97);
+  backdrop-filter: blur(12px);
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+  z-index: 199;
+}
+
+#main-nav.nav--open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#main-nav ul {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 28px;
   list-style: none;
+  gap: 0;
 }
 
-.navbar a {
-  text-decoration: none;
-  color: #e5e5e5;
+#main-nav ul li a {
+  display: block;
+  padding: 14px 28px;
+  font-size: 1.15rem;
   font-weight: 500;
-  transition: 0.3s;
-  font-size: 1.4rem;
+  color: #e5e5e5;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s, padding-left 0.2s;
 }
 
-.navbar a:hover {
+#main-nav ul li a:hover {
   color: #8b5cf6;
-  transition: ease-in-out 0.2s;
+  border-left-color: #8b5cf6;
+  padding-left: 36px;
 }
 
-/* HERO SECTION */
+/* LinkedIn icon in mobile nav */
+#main-nav ul li a svg {
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* Desktop nav (≥ 768px) */
+@media (min-width: 768px) {
+  .navbar {
+    height: 80px;
+    padding: 0 50px;
+  }
+
+  .navbar .logo img {
+    max-height: 200px;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  #main-nav {
+    position: static;
+    width: auto;
+    background: none;
+    backdrop-filter: none;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    border: none;
+    transition: none;
+  }
+
+  #main-nav ul {
+    flex-direction: row;
+    gap: 30px;
+    padding: 0;
+  }
+
+  #main-nav ul li a {
+    padding: 0;
+    font-size: 1.4rem;
+    border-left: none;
+  }
+
+  #main-nav ul li a:hover {
+    color: #8b5cf6;
+    padding-left: 0;
+    border-left: none;
+  }
+}
+
+/* BUBBLE TOGGLE BUTTON */
+.bubble-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(20, 20, 28, 0.85);
+  border: 1.5px solid #8b5cf6;
+  border-radius: 50px;
+  color: #e5e5ff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.2);
+}
+
+.bubble-toggle:hover {
+  background: rgba(139, 92, 246, 0.18);
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.35);
+  transform: translateY(-2px);
+}
+
+.bubble-toggle--off {
+  border-color: #444;
+  color: #888;
+  box-shadow: none;
+}
+
+.bubble-toggle--off:hover {
+  background: rgba(80, 80, 90, 0.2);
+  box-shadow: none;
+}
+
+/* HERO — mobile first */
 .hero {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 0 20px;
+  padding: 100px 24px 60px;
   background: radial-gradient(circle at top, #1a1a1a, #000000);
 }
 
 .hero h1 {
-  font-size: 4rem;
+  font-size: clamp(2rem, 8vw, 4rem);
   background: linear-gradient(90deg, #8b5cf6, #ec4899);
   -webkit-background-clip: text;
   background-clip: text;
@@ -83,7 +237,7 @@ body {
 }
 
 h3 {
-  font-size: 1.6rem;
+  font-size: clamp(1.1rem, 4vw, 1.6rem);
   background: linear-gradient(90deg, #8b5cf6, #ec4899);
   -webkit-background-clip: text;
   background-clip: text;
@@ -91,7 +245,7 @@ h3 {
 }
 
 .hero h2 {
-  font-size: 1.6rem;
+  font-size: clamp(1rem, 4vw, 1.6rem);
   margin-top: 10px;
   color: #bbbbbb;
 }
@@ -99,6 +253,10 @@ h3 {
 .hero-subtext {
   margin-top: 20px;
   color: #999999;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cta-btn {
@@ -109,6 +267,7 @@ h3 {
   border-radius: 50px;
   text-decoration: none;
   color: #e5e5e5;
+  font-size: 0.95rem;
   transition: 0.4s;
 }
 
@@ -119,30 +278,46 @@ h3 {
   transform: translateY(-2px) scale(1.04);
 }
 
-/* PROJECTS */
+/* PROJECTS — mobile first */
 .projects {
-  padding: 120px 50px;
+  padding: 80px 20px;
   text-align: center;
 }
 
 .projects h2 {
-  font-size: 2.4rem;
-  margin-bottom: 50px;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  margin-bottom: 40px;
 }
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(3, 0.8fr);
-  gap: 30px;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 520px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .projects {
+    padding: 120px 50px;
+  }
+  .project-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .project-card {
-  padding: 25px;
+  padding: 22px;
   background: #1b1b1b;
   border-radius: 12px;
   border: 1.5px solid #3a3a46;
   transition: 0.3s;
   overflow: hidden;
+  text-align: left;
 }
 
 .project-card:hover {
@@ -150,64 +325,92 @@ h3 {
   box-shadow: 0 0 18px rgba(139, 92, 246, 0.4);
 }
 
-/* Ensure project images stay inside the card */
+.project-card p {
+  margin-top: 6px;
+  font-size: 0.88rem;
+  color: #aaa;
+}
+
 .project-card img {
   display: block;
   width: 100%;
   max-width: 100%;
   height: auto;
-  margin-top: 12px;
+  margin-top: 14px;
+  border-radius: 6px;
 }
 
-/* ABOUT */
+/* ABOUT — mobile first */
 .about {
-  padding: 120px 50px;
+  padding: 80px 20px;
   text-align: center;
 }
 
 .about h2 {
-  font-size: 2.4rem;
-  margin-bottom: 50px;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  margin-bottom: 40px;
 }
 
 .about-content {
-  max-width: 1000px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 .about-intro {
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
   line-height: 1.8;
   color: #bbbbbb;
-  padding: 30px;
+  padding: 24px 22px;
   background: rgba(139, 92, 246, 0.05);
   border-left: 3px solid #8b5cf6;
   border-radius: 8px;
   text-align: left;
 }
 
-/* CONTACT */
+@media (min-width: 768px) {
+  .about {
+    padding: 120px 50px;
+  }
+  .about-content {
+    max-width: 1000px;
+  }
+  .about-intro {
+    padding: 30px;
+  }
+}
+
+/* CONTACT — mobile first */
 .contact {
-  padding: 120px;
+  padding: 80px 20px;
+}
+
+.contact h2 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  margin-bottom: 32px;
 }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 0.7fr;
-  gap: 60px;
+  grid-template-columns: 1fr;
+  gap: 32px;
 }
 
-.contact h2 {
-  font-size: 2.4rem;
-  margin-bottom: 40px;
+@media (min-width: 860px) {
+  .contact {
+    padding: 120px 60px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr 0.7fr;
+    gap: 60px;
+  }
 }
 
-/* FORM CARD */
+/* Form */
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 40px;
+  gap: 22px;
+  padding: 28px 22px;
   border-radius: 14px;
   background: #131318;
   border: 1px solid #22222a;
@@ -215,7 +418,12 @@ h3 {
   position: relative;
 }
 
-/* Floating label fields */
+@media (min-width: 480px) {
+  .contact-form {
+    padding: 40px;
+  }
+}
+
 .field {
   position: relative;
 }
@@ -235,16 +443,15 @@ h3 {
 
 .field input:focus,
 .field textarea:focus {
+  outline: none;
   border-color: #8b5cf6;
 }
 
-/* Textarea specific: disable manual resize and keep content starting at top */
 .field textarea {
   resize: none;
   overflow: auto;
 }
 
-/* Place the floating label for textarea at the top-left (like inputs) */
 .field textarea + label {
   left: 14px !important;
   right: auto !important;
@@ -253,7 +460,6 @@ h3 {
   text-align: left !important;
 }
 
-/* When textarea is focused or has content, keep the label small and pinned to top-left */
 .field textarea:focus + label,
 .field textarea:not(:placeholder-shown) + label {
   top: -8px !important;
@@ -275,8 +481,8 @@ h3 {
   pointer-events: none;
   transition: 0.2s;
   display: inline-block;
-  white-space: nowrap; /* prevent label wrapping onto multiple lines */
-  z-index: 2; /* keep label above the textarea content */
+  white-space: nowrap;
+  z-index: 2;
 }
 
 .field input:focus + label,
@@ -284,7 +490,7 @@ h3 {
 .field textarea:focus + label,
 .field textarea:not(:placeholder-shown) + label {
   top: -8px;
-  transform: none; /* remove the default translateY so label pins correctly */
+  transform: none;
   font-size: 0.75rem;
   background: #131318;
   padding: 0 6px;
@@ -302,18 +508,19 @@ a {
   text-decoration: none;
 }
 
-/* Button */
+/* Submit button */
 .btn-primary {
-  margin-top: 10px;
   padding: 14px 26px;
   border-radius: 50px;
   background: #222;
   border: 1.5px solid #8b5cf6;
   color: white;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  
+  transition: background 0.2s, transform 0.15s;
 }
 
 .btn-primary:hover {
@@ -336,7 +543,6 @@ a {
 .btn-primary.sending .btn-content {
   opacity: 0;
 }
-
 .btn-primary.sending .btn-loader {
   opacity: 1;
 }
@@ -353,7 +559,7 @@ a {
   border-radius: 8px;
   border: 1.5px solid #3a3a46;
   color: #aaffaa;
-  margin-top: 14px;
+  font-size: 0.9rem;
   transform: translateY(10px);
   transition: 0.3s;
 }
@@ -363,41 +569,47 @@ a {
   transform: translateY(0);
 }
 
-/* Form actions: align submit button to the right */
+/* Form actions */
 .contact-form .actions {
-  position: absolute;
-  right: -155px; /* rapproché du bord droit */
-  bottom: 35px;
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  margin-top: 4px;
 }
 
-/* Sur petits écrans, garder le comportement normal (empilement) */
-@media (max-width: 600px) {
+@media (min-width: 860px) {
   .contact-form .actions {
-    position: static;
-    justify-content: center;
-    margin-top: 6px;
+    position: absolute;
+    right: -165px;
+    bottom: 35px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    margin-top: 0;
   }
 }
 
-/* CONTACT — ASIDE PREMIUM */
+/* CONTACT ASIDE */
 .contact-aside {
-  padding: 40px;
+  padding: 28px 22px;
   border-radius: 14px;
   background: #141418;
   border: 1.5px solid #22222a;
   box-shadow: 0 0 18px rgba(139, 92, 246, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
-/* Title */
+@media (min-width: 480px) {
+  .contact-aside {
+    padding: 40px;
+    gap: 24px;
+  }
+}
+
 .aside-title {
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
   font-weight: 600;
   background: linear-gradient(90deg, #8b5cf6, #ec4899);
   -webkit-background-clip: text;
@@ -405,10 +617,9 @@ a {
   color: transparent;
 }
 
-/* Subtitle */
 .aside-text {
   opacity: 0.8;
-  margin-top: -10px;
+  margin-top: -8px;
   font-size: 0.95rem;
   line-height: 1.4;
 }
@@ -417,11 +628,10 @@ a {
   width: 100%;
   height: 1.5px;
   background: linear-gradient(90deg, transparent, #8b5cf6, #ec4899, transparent);
-  margin: 8px 0 10px;
+  margin: 4px 0 6px;
   opacity: 0.95;
 }
 
-/* List styling */
 .aside-infos {
   list-style: none;
   display: flex;
@@ -431,49 +641,48 @@ a {
 
 .aside-infos li {
   display: grid;
-  /* layout: icon at left spanning two rows, label on the top-right, value on the bottom-right */
   grid-template-columns: 32px 1fr;
   grid-template-rows: auto auto;
   grid-template-areas:
     "icon label"
     "icon value";
-  gap: 8px 12px;
+  gap: 4px 12px;
 }
 
 .aside-infos .icon {
   font-size: 1.3rem;
   opacity: 0.8;
   grid-area: icon;
+  display: flex;
+  align-items: center;
 }
 
 .info-label {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   opacity: 0.55;
   grid-area: label;
 }
 
 .info-value {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: #e5e5e5;
   grid-area: value;
-  margin-top: 2px;
 }
 
-/* Telephone link inside aside: keep on one line and remove underline */
 .aside-infos .info-value a {
   color: inherit;
   text-decoration: none;
-  white-space: nowrap;
+  word-break: break-all;
 }
+
 .aside-infos .info-value a:hover {
   color: #8b5cf6;
   text-decoration: underline;
 }
 
-/* CTA */
 .aside-cta {
-  margin-top: 10px;
+  margin-top: 6px;
   padding: 12px 20px;
   border-radius: 50px;
   background: #1a1a23;
@@ -497,11 +706,10 @@ a {
 /* FOOTER */
 .footer {
   text-align: center;
-  padding: 12px;
+  padding: 16px 20px;
   background: #0a0a0a;
   border-top: 1.5px solid rgba(255, 255, 255, 0.05);
-  margin-top: 80px;
-  width: 100%;
+  margin-top: 60px;
   font-size: 0.75rem;
   display: flex;
   align-items: center;
@@ -509,11 +717,7 @@ a {
   min-height: 20px;
 }
 
-
 /* BUBBLE TRAIL */
-/* main bubble hidden */
-/* BUBBLE TRAIL - optimized (use CSS variables + transform) */
-/* BUBBLE TRAIL - optimized (use CSS variables + transform) */
 .bubble {
   position: fixed;
   left: 0;
@@ -533,16 +737,13 @@ a {
   transition: opacity 300ms linear;
 }
 
-/* sizes / opacities dégressifs */
-.bubble:nth-child(1) { transform-origin: center; width: 35px; height: 35px; }
-.bubble:nth-child(2) { opacity: 0.75; transform-origin: center; transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.95); }
-.bubble:nth-child(3) { opacity: 0.58; transform-origin: center; transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.84); }
-.bubble:nth-child(4) { opacity: 0.42; transform-origin: center; transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.75); }
-.bubble:nth-child(5) { opacity: 0.32; transform-origin: center; transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.65); }
-.bubble:nth-child(6) { opacity: 0.24; transform-origin: center; transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.55); }
+.bubble:nth-child(2) { transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.95); }
+.bubble:nth-child(3) { transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.84); }
+.bubble:nth-child(4) { transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.75); }
+.bubble:nth-child(5) { transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.65); }
+.bubble:nth-child(6) { transform: translate3d(calc(var(--x) * 1px - 50%), calc(var(--y) * 1px - 50%), 0) scale(0.55); }
 
-
-/* FADE-IN ANIMATION */
+/* FADE-IN */
 .fade-in {
   opacity: 0;
   transform: translateY(30px);
@@ -552,11 +753,4 @@ a {
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* Scroll reveal */
-@media (min-width: 1px) {
-  body {
-    overflow-x: hidden;
-  }
 }
