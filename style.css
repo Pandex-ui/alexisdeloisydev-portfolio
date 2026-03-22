@@ -462,53 +462,46 @@ h3 {
   margin-top: 32px;
 }
 
+/* ── Layout des rangées ── */
 .stacks-row {
   display: flex;
   flex-wrap: nowrap;
-  gap: 14px;
   justify-content: center;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: none;
-}
-
-.stacks-row::-webkit-scrollbar {
-  display: none;
+  gap: clamp(6px, 1.4vw, 14px);
 }
 
 .stacks-row--secondary {
   flex-wrap: wrap;
-  gap: 12px;
   justify-content: center;
-  overflow-x: visible;
+  gap: clamp(6px, 1.2vw, 12px);
 }
 
-/* ── Cartes principales ── */
+/* ── Cartes principales : taille 100% fluide ── */
 .stack-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  width: 120px;
-  height: 120px;
+  gap: clamp(6px, 1vw, 12px);
+  width: clamp(68px, 11vw, 120px);
+  height: clamp(68px, 11vw, 120px);
+  flex-shrink: 0;
   background: var(--bg-card);
   border: 1.5px solid var(--border);
-  border-radius: 16px;
+  border-radius: clamp(10px, 1.5vw, 16px);
   cursor: default;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.3s;
-  flex-shrink: 0;
 }
 
 .stack-card img {
-  width: 52px;
-  height: 52px;
+  width: clamp(28px, 4.5vw, 52px);
+  height: clamp(28px, 4.5vw, 52px);
   object-fit: contain;
   display: block;
 }
 
 .stack-card span {
-  font-size: 0.76rem;
+  font-size: clamp(0.55rem, 1.1vw, 0.76rem);
   font-weight: 600;
   color: var(--text-muted);
   white-space: nowrap;
@@ -521,23 +514,23 @@ h3 {
   background: var(--bg-card-2);
 }
 
-/* ── Cartes secondaires ── */
+/* ── Cartes secondaires : légèrement plus petites ── */
 .stack-card--secondary {
-  width: 102px;
-  height: 102px;
-  gap: 10px;
+  width: clamp(60px, 9.5vw, 102px);
+  height: clamp(60px, 9.5vw, 102px);
+  gap: clamp(5px, 0.9vw, 10px);
   border-color: var(--border-soft);
-  border-radius: 14px;
+  border-radius: clamp(8px, 1.3vw, 14px);
   opacity: 0.72;
 }
 
 .stack-card--secondary img {
-  width: 38px;
-  height: 38px;
+  width: clamp(22px, 3.8vw, 38px);
+  height: clamp(22px, 3.8vw, 38px);
 }
 
 .stack-card--secondary span {
-  font-size: 0.68rem;
+  font-size: clamp(0.5rem, 1vw, 0.68rem);
 }
 
 .stack-card--secondary:hover {
@@ -546,14 +539,45 @@ h3 {
   box-shadow: 0 6px 18px rgba(236,72,153,0.22);
 }
 
-@media (max-width: 520px) {
-  .stacks-row { gap: 10px; }
-  .stack-card { width: 96px; height: 96px; }
-  .stack-card img { width: 40px; height: 40px; }
-  .stack-card span { font-size: 0.65rem; }
-  .stack-card--secondary { width: 82px; height: 82px; }
-  .stack-card--secondary img { width: 30px; height: 30px; }
-  .stack-card--secondary span { font-size: 0.6rem; }
+/* ── Mobile : passage en 2 lignes (4 + 3) ── */
+@media (max-width: 500px) {
+  .stacks-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Cards sur 20vw chacune → 4 par ligne sur ~375px */
+  .stack-card {
+    width: calc(20vw - 6px);
+    height: calc(20vw - 6px);
+    border-radius: 12px;
+    gap: 6px;
+  }
+
+  .stack-card img {
+    width: calc(9vw);
+    height: calc(9vw);
+  }
+
+  .stack-card span {
+    font-size: clamp(0.5rem, 2.2vw, 0.65rem);
+  }
+
+  .stack-card--secondary {
+    width: calc(17vw - 6px);
+    height: calc(17vw - 6px);
+    border-radius: 10px;
+    gap: 5px;
+  }
+
+  .stack-card--secondary img {
+    width: calc(7.5vw);
+    height: calc(7.5vw);
+  }
+
+  .stack-card--secondary span {
+    font-size: clamp(0.46rem, 1.8vw, 0.58rem);
+  }
 }
 
 /* ════════════════════════════════════════
