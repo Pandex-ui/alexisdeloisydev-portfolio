@@ -234,9 +234,25 @@
         width: auto;
         max-height: 104px;
         height: auto;
-        filter: var(--logo-filter);
-        transition: filter 0.3s;
+        transition: opacity 0.3s;
       }
+
+      /* ── Logo dark/light switch ── */
+      /* Défaut (dark) : logo blanc visible, logo noir caché */
+      .logo-dark  { display: block; }
+      .logo-light { display: none;  }
+
+      /* Préférence système light */
+      @media (prefers-color-scheme: light) {
+        .logo-dark  { display: none;  }
+        .logo-light { display: block; }
+      }
+
+      /* Overrides manuels */
+      html[data-theme="dark"]  .logo-dark  { display: block; }
+      html[data-theme="dark"]  .logo-light { display: none;  }
+      html[data-theme="light"] .logo-dark  { display: none;  }
+      html[data-theme="light"] .logo-light { display: block; }
 
       @media (min-width: 768px) {
         .navbar {
